@@ -3,7 +3,7 @@ import heapq
 def dijkstra(n, adj, source):
     dist = [float('inf')] * n
     dist[source] = 0
-    h = [(0, source)]
+    q = [(0, source)]
     while q:
         d, u = heapq.heappop(q)
         if dist[u] < d: continue
