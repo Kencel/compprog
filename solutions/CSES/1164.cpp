@@ -7,18 +7,17 @@ using namespace std;
 #define vi vector<int>
 #define pll pair<ll, ll>
 #define pi pair<int, int>
-
-#define mp make_pair
 #define pb push_back
 #define br "\n"
-
 #define all(x) (x.begin(), x.end())
-#define sz(x) (int)(x).size()
-
 const ll INF = 1e18;
 
 void solve() {
-    
+    int n;
+    cin >> n;
+    vector<pi> a(n);
+    vi available(pow(10, 9) + 5);
+    int ans = 1;
 }
 
 int main(void) {
