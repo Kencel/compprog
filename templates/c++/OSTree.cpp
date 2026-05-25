@@ -12,9 +12,15 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define vll vector<ll>
 #define vi vector<int>
 #define pll pair<ll, ll>
+#define pi pair<int, int>
+
+#define mp make_pair
 #define pb push_back
 #define br "\n"
+
 #define all(x) (x.begin(), x.end())
+#define sz(x) (int)(x).size()
+
 const ll INF = 1e18;
 
 void solve() {

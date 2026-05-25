@@ -12,7 +12,7 @@ using namespace std;
 #define pb push_back
 #define br "\n"
 
-#define all(x) (x.begin(), x.end())
+#define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
 const ll INF = 1e18;

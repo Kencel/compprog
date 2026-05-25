@@ -6,9 +6,15 @@ using namespace std;
 #define vll vector<ll>
 #define vi vector<int>
 #define pll pair<ll, ll>
+#define pi pair<int, int>
+
+#define mp make_pair
 #define pb push_back
 #define br "\n"
+
 #define all(x) (x.begin(), x.end())
+#define sz(x) (int)(x).size()
+
 const ll INF = 1e18;
 
 struct segtree {
