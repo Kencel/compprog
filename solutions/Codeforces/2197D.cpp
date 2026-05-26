@@ -12,7 +12,7 @@ using namespace std;
 #define pb push_back
 #define br "\n"
 
-#define all(x) x.begin(), x.end()
+#define all(x) (x.begin(), x.end())
 #define sz(x) (int)(x).size()
 
 const ll INF = 1e18;
@@ -92,7 +92,12 @@ struct segtree {
 };
 
 void solve() {
-    
+    int n;
+    vi a(n);
+    for(int i=0; i < n; i++){
+        cin >> a[i];
+    }
+
 }
 
 int main(void) {
@@ -100,12 +105,12 @@ int main(void) {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
-    // int t;
-    // cin >> t;
-    // while (t--) {
-    //     solve();
-    // }
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
 
-    solve();
+    // solve();
 
 }

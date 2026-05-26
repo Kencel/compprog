@@ -1,12 +1,6 @@
 #include <bits/stdc++.h>
- 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
- 
-using namespace __gnu_pbds;
+
 using namespace std;
- 
-typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 
 #define ll long long
 #define vll vector<ll>
@@ -18,13 +12,29 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define pb push_back
 #define br "\n"
 
-#define all(x) x.begin(), x.end()
+#define all(x) (x.begin(), x.end())
 #define sz(x) (int)(x).size()
 
 const ll INF = 1e18;
+const int MOD = 1e9 + 7;
 
 void solve() {
-    
+    int n, x;
+    cin >> n >> x;
+    vi c(n);
+    for(int i=0; i < n; i++){
+        cin >> c[i];
+    }
+    vi dp(x + 1);
+    dp[0] = 1;
+    for(int i=1; i < x + 1; i++){
+        for(int j=0; j < n; j++){
+            if(i - c[j] < 0) continue;
+            dp[i] += dp[i - c[j]];
+            dp[i] %= MOD;
+        }
+    }
+    cout << dp[x];
 }
 
 int main(void) {
