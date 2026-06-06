@@ -42,12 +42,6 @@ ll bfs(int s, int t, vi& parent, vector<vi>& adj, vector<vll>& capacity) {
     return 0;
 }
 
-void add_edge(int u, int v, ll cap, vector<vi>& adj, vector<vll>& capacity) {
-    adj[u].push_back(v);
-    adj[v].push_back(u);
-    capacity[u][v] = cap;   
-}
-
 ll maxflow(int s, int t, int n, vector<vi>& adj, vector<vll>& capacity) {
     ll flow = 0;
     vector<int> parent(n);
@@ -67,21 +61,56 @@ ll maxflow(int s, int t, int n, vector<vi>& adj, vector<vll>& capacity) {
     return flow;
 }
 
+void add_edge(int u, int v, ll cap, vector<vi>& adj, vector<vll>& capacity) {
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+    capacity[u][v] = cap;   
+}
+
 void solve() {
     int n, m;
     cin >> n >> m;
-    n++;
-    vector<vi> adj(n); // undirected
-    vector<vll> capacity(n); // directed
-    fill(all(capacity), vll(n));
-    for(int i=0; i < m; i++){
-        int a, b;
-        cin >> a >> b;
-        add_edge(a, b, 1, adj, capacity);
+    vector<vi> adj(2 * n + 2); // undirected
+    vector<vll> capacity(2 * n + 2); // directed
+    fill(all(capacity), vll(2 * n  + 2));
+    int a = 0,b = 0;
+    for(int i=0; i < n; i++){
+        int t; 
+        cin >> t;
+        add_edge(0, i + 1, t, adj, capacity);
+        add_edge(i + 1, i + 1 + n, INF, adj, capacity);
+        a += t;
     }
-    maxflow(1, n, n + 1, adj, capacity);
+    for(int i=0; i < n; i++){
+        int t;
+        cin >> t;
+        add_edge(i + n + 1, 2 * n + 1, t, adj, capacity);
+        b += t;
+    }
+    for(int i=0; i < m; i++){
+        int p, q;
+        cin >> p >> q;
+        add_edge(p, q + n, INF, adj, capacity);
+        add_edge(q, p + n, INF, adj, capacity);
+    }
 
-    
+    if (a != b){
+        cout << "NO" << br;
+        return;
+    }
+
+    int mx = maxflow(0, 2 * n + 1, 2 * n + 2, adj, capacity);
+    if (mx != a){
+        cout << "NO" << br;
+    } else {
+        cout << "YES" << br;
+        for(int i=0; i < n; i++){
+            for(int j=0; j < n; j++){
+                cout << capacity[j + n + 1][i + 1] << " ";
+            }
+            cout << br;
+        }
+    }
 }
 
 int main(void) {

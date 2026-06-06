@@ -42,6 +42,12 @@ ll bfs(int s, int t, vi& parent, vector<vi>& adj, vector<vll>& capacity) {
     return 0;
 }
 
+void add_edge(int u, int v, ll cap, vector<vi>& adj, vector<vll>& capacity) {
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+    capacity[u][v] = cap;   
+}
+
 ll maxflow(int s, int t, int n, vector<vi>& adj, vector<vll>& capacity) {
     ll flow = 0;
     vector<int> parent(n);

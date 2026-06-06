@@ -36,7 +36,13 @@ void unite(int u, int v){
 }
 
 void solve() {
-    
+    int n;
+    cin >> n;
+    parent.resize(n);
+    for(int i=0; i < n; i++){
+        parent[i] = i;
+    }
+    comp_size.resize(n);
 }
 
 int main(void) {
