@@ -73,12 +73,9 @@ ll maxflow(int s, int t, int n, vector<vi>& adj, vector<vll>& capacity) {
     return flow;
 }
 
+bool tc = true;
 void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<vi> adj(n); // undirected
-    vector<vll> capacity(n); // directed
-    fill(all(capacity), vll(n));
+
 }
 
 int main(void) {
@@ -86,12 +83,15 @@ int main(void) {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
-    // int t;
-    // cin >> t;
-    // while (t--) {
-    //     solve();
-    // }
+    if(!tc){
+        solve();
+        return 0;
+    }
 
-    solve();
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
 
 }
