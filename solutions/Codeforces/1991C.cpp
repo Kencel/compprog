@@ -21,26 +21,39 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
-const int INF = 1e9;
+const ll INF = 1e18;
 
-bool tc = false;
+bool tc = true;
 void solve() {
     int n;
     cin >> n;
-    map<int, int> rooms;
-    for(int i=0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        rooms[a]++;
-        rooms[b + 1]--;
+    vll a(n);
+    for(int i=0; i < n; i++) cin >> a[i];
+    sort(all(a));
+    a.erase(unique(all(a)), a.end());
+    n = sz(a);
+    vll ans;
+    while(true){
+        ll mn = INF, mx = 0;
+        for(int i=0; i < n; i++) {
+            mn = min(mn, a[i]);
+            mx = max(mx, a[i]);
+        }
+        ll avg = (mx + mn) / 2;
+        if(avg == 0) break;
+        ans.pb(avg);
+        for(int i=0; i < n; i++) a[i] = abs(a[i] - avg);
+        sort(all(a));
+        a.erase(unique(all(a)), a.end());
+        n = sz(a);
     }
-
-    int curr = 0, ans = 0;
-    for(const auto& [key, value] : rooms){
-        curr += value;
-        ans = max(ans, curr);
+    if(n > 1) {
+        cout << -1 << br;
+        return;
     }
-    cout << ans;
+    cout << sz(ans) << br;
+    for(int x : ans) cout << x << " ";
+    cout << br;
 }
 
 int main(void) {

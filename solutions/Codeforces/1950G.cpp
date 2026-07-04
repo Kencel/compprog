@@ -27,36 +27,43 @@ void solve() {
         songs.pb(mp(genre, writer));
     }
 
-    vector<vi> adj(n);
+    vector<vector<bool>> adj(n, vector<bool>(n, false));
     for(int i=0; i < n; i++){
         for(int j=i + 1; j < n; j++){
             if(songs[i].first == songs[j].first || songs[i].second == songs[j].second){
-                adj[i].pb(j);
-                adj[j].pb(i);
+                adj[i][j] = true;
+                adj[j][i] = true;
             }
         }
     }
 
     int keep = 1;
+    vector<vector<bool>> dp((1 << n), vector<bool>(n, false));
     for(int i=0; i < n; i++){
-        int curr_keep = 1;
-        deque<pi> q;
-        set<int> seen;
-        q.pb(mp(i, 1));
-        while(!q.empty()){
-            int curr, depth; 
-            tie(curr, depth) = q[0];
-            q.pop_front();
-            if(seen.contains(curr)) continue;
-            seen.insert(curr);
-            for(auto i : adj[curr]){
-                q.pb(mp(i, depth + 1));
-            }
-            curr_keep = max(curr_keep, depth);
-        }
-        keep = max(keep, curr_keep);
+        dp[1 << i][i] = true;
     }
 
+    vector<int> masks((1 << n));
+    for(int i=0; i < (1 << n); i++) masks[i] = i;
+    sort(all(masks), [](const int &a, const int &b){
+        return __builtin_popcount(a) < __builtin_popcount(b);
+    });
+    for(int i=0; i < (1 << n); i++){
+        int mask = masks[i];
+        if((int)__builtin_popcount(mask) < 2) continue;
+        for(int j=0; j < n; j++){
+            int curr_j = 1 << j;
+            if(!(mask & curr_j)) continue;
+            for(int k=0; k < n; k++){
+                int curr_k = 1 << k;
+                if(j == k || !(mask & curr_k)) continue;
+                if(dp[mask ^ curr_j][k] && adj[k][j]) {
+                    dp[mask][j] = true;
+                    keep = max(keep, (int)__builtin_popcount(mask));
+                }
+            }
+        }
+    }
     cout << (n - keep) << br;
 }
 

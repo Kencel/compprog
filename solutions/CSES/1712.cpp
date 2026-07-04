@@ -8,7 +8,7 @@ using namespace std;
  
 typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 
-#define ll long long
+#define ll unsigned long long
 #define vll vector<ll>
 #define vi vector<int>
 #define pll pair<ll, ll>
@@ -21,26 +21,26 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
-const int INF = 1e9;
+const ll INF = 1e18;
+const ll MOD = 1e9 + 7;
 
-bool tc = false;
+ll modexp(ll val, ll exp, ll mod){
+    val %= mod;
+    ll ret = 1;
+    while(exp > 0){
+        if(exp & 1)
+            ret = ret * val % mod;
+        val = val * val % mod;
+        exp >>= 1;
+    }
+    return ret;
+}
+
+bool tc = true;
 void solve() {
-    int n;
-    cin >> n;
-    map<int, int> rooms;
-    for(int i=0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        rooms[a]++;
-        rooms[b + 1]--;
-    }
-
-    int curr = 0, ans = 0;
-    for(const auto& [key, value] : rooms){
-        curr += value;
-        ans = max(ans, curr);
-    }
-    cout << ans;
+    ll a, b, c;
+    cin >> a >> b >> c;
+    cout << modexp(a, modexp(b, c, MOD - 1), MOD) << br;
 }
 
 int main(void) {

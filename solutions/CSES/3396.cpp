@@ -21,32 +21,49 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
-const int INF = 1e9;
+const ll INF = 1e18;
+vll p;
+vector<bool> np;
 
-bool tc = false;
+bool tc = true;
 void solve() {
-    int n;
+    ll n;
     cin >> n;
-    map<int, int> rooms;
-    for(int i=0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        rooms[a]++;
-        rooms[b + 1]--;
-    }
+    n++;
+    for(;;n++){
+        if(n < 2) continue;
+        bool found = true;
+        for(ll prime : p){
+            if(prime * prime > n) break;
+            if(n == prime) break;
+            if(n % prime == 0){
+                found = false;
+                break;
+            }
+        }
+        if(found){
+            cout << n << br;
+            break;
+        }
 
-    int curr = 0, ans = 0;
-    for(const auto& [key, value] : rooms){
-        curr += value;
-        ans = max(ans, curr);
     }
-    cout << ans;
 }
 
 int main(void) {
 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+
+    np.resize(2e6);
+    for(ll i=2; i < 2e6; i++){
+        if(np[i]) continue;
+        p.pb(i);
+        ll curr = i * 2;
+        while(curr < 2e6){
+            np[curr] = true;
+            curr += i;
+        }
+    }
     
     if(!tc){
         solve();

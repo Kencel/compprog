@@ -125,19 +125,18 @@ struct lazy_segtree {
 };
 struct S {
     ll value;
-    int size;
 };
 struct F {
     ll add;
 };
 S op(S a, S b) {
-    return {a.value + b.value, a.size + b.size};
+    return {a.value & b.value};
 }
 S e() {
-    return {0, 0};
+    return {(1ll << 32) - 1};
 }
 S mapping(F f, S x) {
-    return {x.value + f.add * x.size, x.size};
+    return x;
 }
 F composition(F new_f, F old_f) {
     return {new_f.add + old_f.add};
@@ -148,7 +147,36 @@ F id() {
 
 bool tc = true;
 void solve() {
-
+    int n;
+    cin >> n;
+    vector<S> a;
+    int temp;
+    for(int i=0; i < n; i++) {
+        cin >> temp;
+        a.pb({temp});
+    }
+    lazy_segtree<S, op, e, F, mapping, composition, id> s(a);
+    int q, idx, k;
+    cin >> q;
+    for(int i=0; i < q; i++){
+        cin >> idx >> k;
+        idx--;
+        if(a[idx].value < k){
+            cout << -1 << " ";
+            continue;
+        }
+        int l = idx, r = n, m;
+        while(r - l > 1){
+            m = (l + r) / 2;
+            if(s.prod(idx, m + 1).value < k){
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+        cout << (l + 1) << " ";
+    }
+    cout << br;
 }
 
 int main(void) {

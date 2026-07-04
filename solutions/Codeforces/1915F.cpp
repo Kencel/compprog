@@ -6,7 +6,7 @@
 using namespace __gnu_pbds;
 using namespace std;
  
-typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
+typedef tree<int, null_type, greater<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 
 #define ll long long
 #define vll vector<ll>
@@ -21,26 +21,26 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
-const int INF = 1e9;
+const ll INF = 1e18;
 
-bool tc = false;
+bool tc = true;
 void solve() {
     int n;
     cin >> n;
-    map<int, int> rooms;
+    vector<pi> a(n);
     for(int i=0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        rooms[a]++;
-        rooms[b + 1]--;
+        int x, y;
+        cin >> x >> y;
+        a[i] = {x, y};
     }
-
-    int curr = 0, ans = 0;
-    for(const auto& [key, value] : rooms){
-        curr += value;
-        ans = max(ans, curr);
+    sort(all(a));
+    ll ans = 0;
+    ordered_multiset o;
+    for(int i=0; i < n; i++){
+        ans += o.order_of_key(a[i].second);
+        o.insert(a[i].second);
     }
-    cout << ans;
+    cout << ans << br;
 }
 
 int main(void) {

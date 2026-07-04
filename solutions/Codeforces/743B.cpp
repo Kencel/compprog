@@ -21,26 +21,29 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
-const int INF = 1e9;
+const ll INF = 1e18;
 
 bool tc = false;
 void solve() {
-    int n;
-    cin >> n;
-    map<int, int> rooms;
-    for(int i=0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        rooms[a]++;
-        rooms[b + 1]--;
+    ll n, k;
+    cin >> n >> k;
+    k--;
+    ll l = 0, r = (1ll << n) - 1;
+    ll ans = n;
+    while(r - l > 1){
+        ll m = (l + r) / 2;
+        if(m == k){
+            cout << ans;
+            return;
+        }
+        ans--;
+        if(k < m){
+            r = m;
+        } else {
+            l = m;
+        }
     }
-
-    int curr = 0, ans = 0;
-    for(const auto& [key, value] : rooms){
-        curr += value;
-        ans = max(ans, curr);
-    }
-    cout << ans;
+    cout << 1;
 }
 
 int main(void) {

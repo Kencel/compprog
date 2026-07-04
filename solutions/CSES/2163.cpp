@@ -6,7 +6,7 @@
 using namespace __gnu_pbds;
 using namespace std;
  
-typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 
 #define ll long long
 #define vll vector<ll>
@@ -21,33 +21,30 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
-const int INF = 1e9;
+const ll INF = 1e18;
 
 bool tc = false;
 void solve() {
-    int n;
-    cin >> n;
-    map<int, int> rooms;
-    for(int i=0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        rooms[a]++;
-        rooms[b + 1]--;
+    int n, k;
+    cin >> n >> k;
+    ordered_multiset o;
+    for(int i=1; i <=n; i++){
+        o.insert(i);
     }
-
-    int curr = 0, ans = 0;
-    for(const auto& [key, value] : rooms){
-        curr += value;
-        ans = max(ans, curr);
+    int curr = k % sz(o);
+    while(true){
+        cout << (*o.find_by_order(curr)) << " ";
+        o.erase(o.find_by_order(curr));
+        if(o.empty()) break;
+        curr = (curr + k) % sz(o);
     }
-    cout << ans;
 }
 
 int main(void) {
 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     if(!tc){
         solve();
         return 0;

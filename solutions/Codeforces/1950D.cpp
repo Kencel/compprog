@@ -21,26 +21,35 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_
 #define all(x) x.begin(), x.end()
 #define sz(x) (int)(x).size()
 
-const int INF = 1e9;
+const ll INF = 1e18;
 
-bool tc = false;
+int MAXN = 1e5 + 5;
+vector<bool> possible(MAXN, false);
+vector<int> bin;
+
+void backtrack(int curr, int idx){
+    if(curr >= MAXN) return;
+    if(possible[curr]) return;
+    possible[curr] = true;
+
+    for(int i=idx; i < sz(bin); i++){
+        backtrack(curr * bin[i], idx);
+    }
+}
+
+void precompute(){
+    for(int i=2; i < (1 << 5); i++){
+        string s = bitset<5>(i).to_string();
+        bin.pb(stoi(s));
+    }
+    backtrack(1, 0);
+}
+
+bool tc = true;
 void solve() {
     int n;
     cin >> n;
-    map<int, int> rooms;
-    for(int i=0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        rooms[a]++;
-        rooms[b + 1]--;
-    }
-
-    int curr = 0, ans = 0;
-    for(const auto& [key, value] : rooms){
-        curr += value;
-        ans = max(ans, curr);
-    }
-    cout << ans;
+    cout << (possible[n] ? "YES" : "NO") << br;
 }
 
 int main(void) {
@@ -55,6 +64,7 @@ int main(void) {
 
     int t;
     cin >> t;
+    precompute();
     while (t--) {
         solve();
     }
